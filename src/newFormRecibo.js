@@ -102,7 +102,7 @@ function NewFormRecibo() {
     };
 
     useEffect(() => {
-        if(valorDiaria > 0 && diasTrabalhados > 0 && valorTotalPassagem > 0){
+        if(valorDiaria > 0 && diasTrabalhados > 0 && valorTotalPassagem !== null){
             const valorTotal = (valorDiaria * diasTrabalhados) - valorTotalPassagem
             const valorTotalSemDesconto = valorDiaria * diasTrabalhados
             setValorTotal(formatBR(valorTotalSemDesconto));
@@ -207,7 +207,7 @@ function NewFormRecibo() {
                     </Form>
                 </Row>
                 <Row>
-                    <Col xs={3}>
+                    <Col xs={6}>
                         <ReactToPrint
                             trigger={() => <Button>IMPRIMIR!</Button>}
                             content={() => componentRef}
@@ -281,9 +281,6 @@ function NewFormRecibo() {
                         <hr/>
                     </Row>
                     </div>
-                </Row>
-                <Row style={{ marginTop: '20px'}}>
-
                 </Row>
 
             </Container>
