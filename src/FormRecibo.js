@@ -82,12 +82,12 @@ function FormRecibo() {
         console.log('valor total', valorTotal);
         const valorFracionado = valorTotal / totalDias;
         console.log('valor fracionado', valorFracionado);
-
+        const valorFinal = valorFracionado * dias
         const formattedNumber = new Intl.NumberFormat('pt-BR', {
             style: 'currency',
             currency: 'BRL',
             minimumFractionDigits: 2,
-        }).format(valorFracionado)
+        }).format(valorFinal)
         return formattedNumber;
     }
 
