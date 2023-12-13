@@ -103,7 +103,7 @@ function NewFormRecibo() {
 
     useEffect(() => {
         if(valorDiaria > 0 && diasTrabalhados > 0 && valorTotalPassagem > 0){
-            const valorTotal = (valorDiaria - valorTotalPassagem) * diasTrabalhados
+            const valorTotal = (valorDiaria * diasTrabalhados) - valorTotalPassagem
             const valorTotalSemDesconto = valorDiaria * diasTrabalhados
             setValorTotal(formatBR(valorTotalSemDesconto));
             const totalDias = diasTrabalhados * 12
