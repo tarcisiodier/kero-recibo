@@ -122,6 +122,18 @@ function NewFormRecibo() {
 
     }, [valorDiaria, diasTrabalhados, valorPassagem, numPassagem]);
 
+    const clonarDiv = (e) => {
+        e.preventDefault();
+        // Suponha que a classe da div que você quer clonar seja 'minha-classe'
+        let divOriginal = document.querySelector('.divPrint'); // Seleciona a primeira div com essa classe
+
+        // Clona a div, incluindo seu conteúdo interno
+        let divClonada = divOriginal.cloneNode(true);
+
+        // Insere a div clonada após a div original no DOM
+        divOriginal.parentNode.insertBefore(divClonada, divOriginal.nextSibling);
+    }
+
     return(
         <>
             <Container>
@@ -173,8 +185,20 @@ function NewFormRecibo() {
                         </Row>
                     </Form>
                 </Row>
+                <Row>
+                    <Col xs={3}>
+                        <ReactToPrint
+                            trigger={() => <Button>IMPRIMIR!</Button>}
+                            content={() => componentRef}
+                        />
+
+                        <Button variant="warning" onClick={clonarDiv} style={{ marginLeft: '10px' }}>COPIAR RECIBO</Button>
+                    </Col>
+
+                </Row>
                 <hr/>
-                <Row media="print" style={{ marginTop: '30px', padding: '0px 20px'}} ref={(el) => (componentRef = el)} >
+                <Row media="print" style={{ marginTop: '30px', padding: '0px 20px'}} ref={(el) => (componentRef = el)}>
+                    <div className="divPrint">
                     <Row>
                         <h3>Recibo</h3>
                         <p>Eu ________________________________________________, recebi de <span className="font-weight-bold">{selectedEmpresaData ? (selectedEmpresaData.nome):('SELECIONE UMA EMPRESA')}</span>
@@ -225,162 +249,10 @@ function NewFormRecibo() {
                         </Col>
                         <hr/>
                     </Row>
-                    <Row>
-                        <h3>Recibo</h3>
-                        <p>Eu ________________________________________________, recebi de <span className="font-weight-bold">{selectedEmpresaData ? (selectedEmpresaData.nome):('SELECIONE UMA EMPRESA')}</span>
-                            - CPF/CNPJ nº <span className="font-weight-bold">{selectedEmpresaData ? (selectedEmpresaData.cnpj):('XXXXXXXXXXXX-XX')}</span>,
-                            a importância de <span className="font-weight-bold">{valorTotal ||
-                                'R$ 0.00'}</span>
-                        </p>
-                        <p>
-                            Este valor inclui o pagamento antecipado referente aos itens discriminados abaixo:
-                        </p>
-                    </Row>
-                    <Row>
-                        <Col style={{ width: '100px', backgroundColor: '#fafafa'}} className="fontPrint">
-                            <p className="font-weight-bold mt-3">Transporte:</p>
-                            <ul>
-                                <li>Passagens: <span className="font-weight-bold">{numPassagem || 0}</span></li>
-                                <li>Valor da Passagem: <span
-                                    className="font-weight-bold">{formatBR(valorPassagem) || 'R$ 0,00'}</span>
-                                </li>
-                                <li>Total: <span
-                                    className="font-weight-bold">{valorTotalPassagem || 'R$ 0,00'}</span>
-                                </li>
-                            </ul>
-                        </Col>
-                        <Col style={{ width: '100px',  backgroundColor: '#fafafa'}} className="fontPrint">
-                            <p className="font-weight-bold mt-3">13º proporcional aos dias trabalhados:</p>
-                            <ul>
-                                <li>Valor: <span
-                                    className="font-weight-bold">{decimoTerceiro || 'R$ 0,00'}</span>
-                                </li>
-                            </ul>
-                        </Col>
-                        <Col style={{ width: '100px',  backgroundColor: '#fafafa'}} className="fontPrint">
-                            <p className="font-weight-bold mt-3">Férias proporcionais aos dias trabalhados:</p>
-                            <ul>
-                                <li>Valor: <span
-                                    className="font-weight-bold">{ferias || 'R$ 0,00'}</span>
-                                </li>
-                            </ul>
-                        </Col>
-                        <Col style={{ width: '150px'}} className="fontPrint">
-                            <hr/>
-                            <p className="font-weight-bold text-center" style={{ margin: '-15px 0 30px 0'}}>Data</p>
-                            <hr/>
-                            <p className="font-weight-bold text-center" style={{ margin: '-15px 0 30px 0'}}>Assinatura</p>
-                            <hr/>
-                            <p className="font-weight-bold text-center" style={{ margin: '-15px 0 10px 0'}}>Documento</p>
-                        </Col>
-                        <hr/>
-                    </Row>
-                    <Row>
-                        <h3>Recibo</h3>
-                        <p>Eu ________________________________________________, recebi de <span className="font-weight-bold">{selectedEmpresaData ? (selectedEmpresaData.nome):('SELECIONE UMA EMPRESA')}</span>
-                            - CPF/CNPJ nº <span className="font-weight-bold">{selectedEmpresaData ? (selectedEmpresaData.cnpj):('XXXXXXXXXXXX-XX')}</span>,
-                            a importância de <span className="font-weight-bold">{valorTotal ||
-                                'R$ 0.00'}</span>
-                        </p>
-                        <p>
-                            Este valor inclui o pagamento antecipado referente aos itens discriminados abaixo:
-                        </p>
-                    </Row>
-                    <Row>
-                        <Col style={{ width: '100px', backgroundColor: '#fafafa'}} className="fontPrint">
-                            <p className="font-weight-bold mt-3">Transporte:</p>
-                            <ul>
-                                <li>Passagens: <span className="font-weight-bold">{numPassagem || 0}</span></li>
-                                <li>Valor da Passagem: <span
-                                    className="font-weight-bold">{formatBR(valorPassagem) || 'R$ 0,00'}</span>
-                                </li>
-                                <li>Total: <span
-                                    className="font-weight-bold">{valorTotalPassagem || 'R$ 0,00'}</span>
-                                </li>
-                            </ul>
-                        </Col>
-                        <Col style={{ width: '100px',  backgroundColor: '#fafafa'}} className="fontPrint">
-                            <p className="font-weight-bold mt-3">13º proporcional aos dias trabalhados:</p>
-                            <ul>
-                                <li>Valor: <span
-                                    className="font-weight-bold">{decimoTerceiro || 'R$ 0,00'}</span>
-                                </li>
-                            </ul>
-                        </Col>
-                        <Col style={{ width: '100px',  backgroundColor: '#fafafa'}} className="fontPrint">
-                            <p className="font-weight-bold mt-3">Férias proporcionais aos dias trabalhados:</p>
-                            <ul>
-                                <li>Valor: <span
-                                    className="font-weight-bold">{ferias || 'R$ 0,00'}</span>
-                                </li>
-                            </ul>
-                        </Col>
-                        <Col style={{ width: '150px'}} className="fontPrint">
-                            <hr/>
-                            <p className="font-weight-bold text-center" style={{ margin: '-15px 0 30px 0'}}>Data</p>
-                            <hr/>
-                            <p className="font-weight-bold text-center" style={{ margin: '-15px 0 30px 0'}}>Assinatura</p>
-                            <hr/>
-                            <p className="font-weight-bold text-center" style={{ margin: '-15px 0 10px 0'}}>Documento</p>
-                        </Col>
-                        <hr/>
-                    </Row>
-                    <Row>
-                        <h3>Recibo</h3>
-                        <p>Eu ________________________________________________, recebi de <span className="font-weight-bold">{selectedEmpresaData ? (selectedEmpresaData.nome):('SELECIONE UMA EMPRESA')}</span>
-                            - CPF/CNPJ nº <span className="font-weight-bold">{selectedEmpresaData ? (selectedEmpresaData.cnpj):('XXXXXXXXXXXX-XX')}</span>,
-                            a importância de <span className="font-weight-bold">{valorTotal ||
-                                'R$ 0.00'}</span>
-                        </p>
-                        <p>
-                            Este valor inclui o pagamento antecipado referente aos itens discriminados abaixo:
-                        </p>
-                    </Row>
-                    <Row>
-                        <Col style={{ width: '100px', backgroundColor: '#fafafa'}} className="fontPrint">
-                            <p className="font-weight-bold mt-3">Transporte:</p>
-                            <ul>
-                                <li>Passagens: <span className="font-weight-bold">{numPassagem || 0}</span></li>
-                                <li>Valor da Passagem: <span
-                                    className="font-weight-bold">{formatBR(valorPassagem) || 'R$ 0,00'}</span>
-                                </li>
-                                <li>Total: <span
-                                    className="font-weight-bold">{valorTotalPassagem || 'R$ 0,00'}</span>
-                                </li>
-                            </ul>
-                        </Col>
-                        <Col style={{ width: '100px',  backgroundColor: '#fafafa'}} className="fontPrint">
-                            <p className="font-weight-bold mt-3">13º proporcional aos dias trabalhados:</p>
-                            <ul>
-                                <li>Valor: <span
-                                    className="font-weight-bold">{decimoTerceiro || 'R$ 0,00'}</span>
-                                </li>
-                            </ul>
-                        </Col>
-                        <Col style={{ width: '100px',  backgroundColor: '#fafafa'}} className="fontPrint">
-                            <p className="font-weight-bold mt-3">Férias proporcionais aos dias trabalhados:</p>
-                            <ul>
-                                <li>Valor: <span
-                                    className="font-weight-bold">{ferias || 'R$ 0,00'}</span>
-                                </li>
-                            </ul>
-                        </Col>
-                        <Col style={{ width: '150px'}} className="fontPrint">
-                            <hr/>
-                            <p className="font-weight-bold text-center" style={{ margin: '-15px 0 30px 0'}}>Data</p>
-                            <hr/>
-                            <p className="font-weight-bold text-center" style={{ margin: '-15px 0 30px 0'}}>Assinatura</p>
-                            <hr/>
-                            <p className="font-weight-bold text-center" style={{ margin: '-15px 0 10px 0'}}>Documento</p>
-                        </Col>
-                        <hr/>
-                    </Row>
+                    </div>
                 </Row>
                 <Row style={{ marginTop: '20px'}}>
-                    <ReactToPrint
-                        trigger={() => <Button>IMPRIMIR!</Button>}
-                        content={() => componentRef}
-                    />
+
                 </Row>
 
             </Container>
