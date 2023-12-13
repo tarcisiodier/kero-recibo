@@ -37,6 +37,8 @@ function NewFormRecibo() {
     const [valorTotalPassagem, setValorTotalPassagem] = useState('');
     const [decimoTerceiro, setDecimoTerceiro] = useState('');
     const [ferias, setFerias] = useState('');
+    const [insalubridade, setInsalubridade] = useState(false);
+    const [valorInsalubridade, setValorInsalubridade] = useState('');
     let componentRef = useRef();
 
     //SELECT EMPRESA
@@ -100,27 +102,30 @@ function NewFormRecibo() {
     };
 
     useEffect(() => {
-        if(valorDiaria > 0 && diasTrabalhados > 0){
-            const valorTotal = valorDiaria * diasTrabalhados
-            setValorTotal(formatBR(valorTotal));
+        if(valorDiaria > 0 && diasTrabalhados > 0 && valorTotalPassagem > 0){
+            const valorTotal = (valorDiaria - valorTotalPassagem) * diasTrabalhados
+            const valorTotalSemDesconto = valorDiaria * diasTrabalhados
+            setValorTotal(formatBR(valorTotalSemDesconto));
             const totalDias = diasTrabalhados * 12
             setDecimoTerceiro(formatBR((valorTotal/ totalDias).toFixed(2) * diasTrabalhados));
             const percentual = 33.33 / 100
             const valorFerias = (valorTotal * percentual).toFixed(2)
             console.log('valor ferias', valorFerias); // value without mask (ex: 1)
             setFerias(formatBR((valorFerias / totalDias).toFixed(2) * diasTrabalhados));
+            const calcInsalubridade = ((1320 / 26) * (20 / 100)) * diasTrabalhados;
+            setValorInsalubridade(formatBR(calcInsalubridade));
         } else {
             setValorTotal('');
         }
 
         if(valorPassagem > 0 && numPassagem > 0){
-            setValorTotalPassagem(formatBR(valorPassagem * numPassagem));
+            setValorTotalPassagem(valorPassagem * numPassagem);
         } else {
             setValorTotalPassagem('');
         }
 
 
-    }, [valorDiaria, diasTrabalhados, valorPassagem, numPassagem]);
+    }, [valorDiaria, diasTrabalhados, valorPassagem, numPassagem, valorTotalPassagem]);
 
     const clonarDiv = (e) => {
         e.preventDefault();
@@ -134,13 +139,17 @@ function NewFormRecibo() {
         divOriginal.parentNode.insertBefore(divClonada, divOriginal.nextSibling);
     }
 
+    const handleChangeInsalubridade = () => {
+        setInsalubridade(!insalubridade);
+    };
+
     return(
         <>
             <Container>
                 <Row className="d-flex justify-content-center align-items-center">
                     <Form>
                         <Row>
-                            <Col xs={4}>
+                            <Col xs={6}>
                                 <Form.Group className="mb-3" controlId="formBasicEmpresa">
                                     <Form.Label>Empresa</Form.Label>
                                     <Form.Select aria-label="Default select example" id="empresaSelect"
@@ -154,32 +163,44 @@ function NewFormRecibo() {
                                     </Form.Select>
                                 </Form.Group>
                             </Col>
-                            <Col xs={2}>
+                            <Col xs={3}>
                                 <Form.Group className="mb-3" controlId="formBasicValor">
                                     <Form.Label>Valor do Dia</Form.Label>
                                     <IntlCurrencyInput currency="BRL" config={currencyConfig}
                                                        onChange={handleChangeValorDiaria} className="form-control"/>
                                 </Form.Group>
                             </Col>
-                            <Col xs={2}>
+                            <Col xs={3}>
                                 <Form.Group className="mb-3" controlId="formBasicValor">
                                     <Form.Label>Dias Trabalhados</Form.Label>
                                     <Form.Control name="dias_trabalhados" required className="form-control"
                                                   onChange={(e) => setDiasTrabalhados(e.target.value)}/>
                                 </Form.Group>
                             </Col>
-                            <Col xs={2}>
+                            <Col xs={3}>
                                 <Form.Group className="mb-3" controlId="formBasicPassagem">
                                     <Form.Label>Valor Passagem</Form.Label>
                                     <IntlCurrencyInput currency="BRL" config={currencyConfig}
                                                        onChange={handleChangeValorPassagem} className="form-control"/>
                                 </Form.Group>
                             </Col>
-                            <Col xs={2}>
+                            <Col xs={3}>
                                 <Form.Group className="mb-3" controlId="formBasicNumPassagem">
                                     <Form.Label>Passagem(s)</Form.Label>
                                     <Form.Control type="number" name="num_passagem" required className="form-control"
                                                   onChange={(e) => setNumPassagem(e.target.value)}/>
+                                </Form.Group>
+                            </Col>
+                            <Col xs={3}>
+                                <Form.Group className="mb-3" controlId="formBasicNumPassagem">
+                                    <Form.Label>Insalubridade</Form.Label>
+                                    <Form.Check // prettier-ignore
+                                        type="switch"
+                                        id="custom-switch"
+                                        label="Clique para Sim"
+                                        checked={insalubridade}
+                                        onChange={handleChangeInsalubridade}
+                                    />
                                 </Form.Group>
                             </Col>
                         </Row>
@@ -219,7 +240,7 @@ function NewFormRecibo() {
                                     className="font-weight-bold">{formatBR(valorPassagem) || 'R$ 0,00'}</span>
                                 </li>
                                 <li>Total: <span
-                                    className="font-weight-bold">{valorTotalPassagem || 'R$ 0,00'}</span>
+                                    className="font-weight-bold">{formatBR(valorTotalPassagem) || 'R$ 0,00'}</span>
                                 </li>
                             </ul>
                         </Col>
@@ -230,6 +251,16 @@ function NewFormRecibo() {
                                     className="font-weight-bold">{decimoTerceiro || 'R$ 0,00'}</span>
                                 </li>
                             </ul>
+                            {insalubridade && (
+                                <>
+                                <p className="font-weight-bold mt-3">Insalubridade:</p>
+                                <ul>
+                                    <li>Valor: <span
+                                        className="font-weight-bold">{valorInsalubridade || 'R$ 0,00'}</span>
+                                    </li>
+                                </ul>
+                                </>
+                            )}
                         </Col>
                         <Col style={{ width: '100px',  backgroundColor: '#fafafa'}} className="fontPrint">
                             <p className="font-weight-bold mt-3">Férias proporcionais aos dias trabalhados:</p>
