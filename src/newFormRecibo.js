@@ -234,7 +234,7 @@ function NewFormRecibo() {
                     <Row>
                         <Col style={{ width: '100px', backgroundColor: '#fafafa'}} className="fontPrint">
                             <p className="font-weight-bold mt-3">Transporte:</p>
-                            <ul>
+                            <ul style={{ marginTop: '-15px'}}>
                                 <li>Passagens: <span className="font-weight-bold">{numPassagem || 0}</span></li>
                                 <li>Valor da Passagem: <span
                                     className="font-weight-bold">{formatBR(valorPassagem) || 'R$ 0,00'}</span>
@@ -246,7 +246,7 @@ function NewFormRecibo() {
                         </Col>
                         <Col style={{ width: '100px',  backgroundColor: '#fafafa'}} className="fontPrint">
                             <p className="font-weight-bold mt-3">13º proporcional aos dias trabalhados:</p>
-                            <ul>
+                            <ul style={{ marginTop: '-15px'}}>
                                 <li>Valor: <span
                                     className="font-weight-bold">{decimoTerceiro || 'R$ 0,00'}</span>
                                 </li>
@@ -254,7 +254,7 @@ function NewFormRecibo() {
                             {insalubridade && (
                                 <>
                                 <p className="font-weight-bold mt-3">Insalubridade:</p>
-                                <ul>
+                                <ul style={{ marginTop: '-15px'}}>
                                     <li>Valor: <span
                                         className="font-weight-bold">{valorInsalubridade || 'R$ 0,00'}</span>
                                     </li>
@@ -264,7 +264,7 @@ function NewFormRecibo() {
                         </Col>
                         <Col style={{ width: '100px',  backgroundColor: '#fafafa'}} className="fontPrint">
                             <p className="font-weight-bold mt-3">Férias proporcionais aos dias trabalhados:</p>
-                            <ul>
+                            <ul style={{ marginTop: '-15px'}}>
                                 <li>Valor: <span
                                     className="font-weight-bold">{ferias || 'R$ 0,00'}</span>
                                 </li>
