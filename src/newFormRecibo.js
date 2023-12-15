@@ -152,6 +152,12 @@ function NewFormRecibo() {
     const handleChangeInsalubridade = () => {
         setInsalubridade(!insalubridade);
     };
+    const handleConfirm = () => {
+        const confirmed = window.confirm("Limpar recibos?");
+        if (confirmed) {
+            window.location.reload();
+        }
+    };
 
     return(
         <>
@@ -224,6 +230,7 @@ function NewFormRecibo() {
                         />
 
                         <Button variant="warning" onClick={clonarDiv} style={{ marginLeft: '10px' }} disabled={isDisabled}>COPIAR RECIBO</Button>
+                        <Button variant="danger" onClick={handleConfirm} style={{ marginLeft: '10px' }} >LIMPAR RECIBOS</Button>
                     </Col>
 
                 </Row>
