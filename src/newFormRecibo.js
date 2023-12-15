@@ -105,6 +105,7 @@ function NewFormRecibo() {
 
     useEffect(() => {
         if(valorDiaria > 0 && diasTrabalhados > 0 && valorTotalPassagem !== null){
+            const DIAS_MES = 30
             const valorTotal = (valorDiaria * diasTrabalhados) - valorTotalPassagem
             const valorTotalSemDesconto = valorDiaria * diasTrabalhados
             setValorTotal(formatBR(valorTotalSemDesconto));
@@ -114,7 +115,7 @@ function NewFormRecibo() {
             const valorFerias = (valorTotal * percentual).toFixed(2)
             console.log('valor ferias', valorFerias); // value without mask (ex: 1)
             setFerias(formatBR((valorFerias / totalDias).toFixed(2) * diasTrabalhados));
-            const calcInsalubridade = ((1320 / 26) * (20 / 100)) * diasTrabalhados;
+            const calcInsalubridade = ((1320 / DIAS_MES) * (20 / 100)) * diasTrabalhados;
             setValorInsalubridade(formatBR(calcInsalubridade));
         } else {
             setValorTotal('');
