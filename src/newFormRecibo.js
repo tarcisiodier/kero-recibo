@@ -39,6 +39,7 @@ function NewFormRecibo() {
     const [ferias, setFerias] = useState('');
     const [insalubridade, setInsalubridade] = useState(false);
     const [valorInsalubridade, setValorInsalubridade] = useState('');
+    const [maxRecibo, setMaxRecibo] = useState(1);
     let componentRef = useRef();
 
     //SELECT EMPRESA
@@ -137,6 +138,12 @@ function NewFormRecibo() {
 
         // Insere a div clonada após a div original no DOM
         divOriginal.parentNode.insertBefore(divClonada, divOriginal.nextSibling);
+
+        if(maxRecibo === 3){
+            alert('Máximo de recibos permitidos: 4');
+        } else {
+            setMaxRecibo(maxRecibo + 1);
+        }
     }
 
     const handleChangeInsalubridade = () => {
