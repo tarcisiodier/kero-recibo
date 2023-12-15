@@ -40,6 +40,7 @@ function NewFormRecibo() {
     const [insalubridade, setInsalubridade] = useState(false);
     const [valorInsalubridade, setValorInsalubridade] = useState('');
     const [maxRecibo, setMaxRecibo] = useState(1);
+    const [isDisabled, setIsDisabled] = useState(false);
     let componentRef = useRef();
 
     //SELECT EMPRESA
@@ -140,6 +141,7 @@ function NewFormRecibo() {
         divOriginal.parentNode.insertBefore(divClonada, divOriginal.nextSibling);
 
         if(maxRecibo === 3){
+            setIsDisabled(true);
             alert('Máximo de recibos permitidos: 4');
         } else {
             setMaxRecibo(maxRecibo + 1);
@@ -220,7 +222,7 @@ function NewFormRecibo() {
                             content={() => componentRef}
                         />
 
-                        <Button variant="warning" onClick={clonarDiv} style={{ marginLeft: '10px' }}>COPIAR RECIBO</Button>
+                        <Button variant="warning" onClick={clonarDiv} style={{ marginLeft: '10px' }} disabled={isDisabled}>COPIAR RECIBO</Button>
                     </Col>
 
                 </Row>
