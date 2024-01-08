@@ -29,6 +29,7 @@ const currencyConfig = {
 function NewFormRecibo() {
     const [selectedEmpresa, setSelectedEmpresa] = useState('');
     const [selectedEmpresaData, setSelectedEmpresaData] = useState(null);
+    const [selectFormaPagamentos,  setSelectedFormaPagamentos] = useState(null)
     const [valorDiaria, setValorDiaria] = useState('');
     const [diasTrabalhados, setDiasTrabalhados] = useState('');
     const [valorTotal, setValorTotal] = useState('');
@@ -67,6 +68,25 @@ function NewFormRecibo() {
         }
 
     ]
+
+    const formaPagamento = [
+        {
+            'nome': 'Dinheiro',
+            'value': 'em DINHEIRO.'
+        },
+        {
+            'nome': 'PIX',
+            'value': 'por PIX.'
+        },
+        {
+            'nome': 'TED',
+            'value': 'por TED.'
+        },
+        {
+            'nome': 'Dinheiro e Transferência Bancária',
+            'value': 'uma parte em DINHEIRO e o restante por Transferência Bancária.'
+        },
+    ]
     const handleChangeEmpresa = (event) => {
         const selectedCnpj = event.target.value;
         setSelectedEmpresa(selectedCnpj);
@@ -81,6 +101,10 @@ function NewFormRecibo() {
         }
     };
 
+    const handleChangeFormaPagamento = (event) => {
+        const selectedTipo = event.target.value;
+        setSelectedFormaPagamentos(selectedTipo);
+    };
 
     const formatBR = (value) => {
         return new Intl.NumberFormat('pt-BR', {
@@ -207,6 +231,21 @@ function NewFormRecibo() {
                                                   onChange={(e) => setNumPassagem(e.target.value)}/>
                                 </Form.Group>
                             </Col>
+
+                            <Col xs={3}>
+                                <Form.Group className="mb-3" controlId="formBasicFormadePagamento">
+                                    <Form.Label>Forma de Pagamento</Form.Label>
+                                    <Form.Select aria-label="Default select example" id="formBasicFormadePagamento"
+                                                 value={selectFormaPagamentos} onChange={handleChangeFormaPagamento}>
+                                        <option value="Selecione uma forma de pagamento!">Selecione um Opção</option>
+                                        {formaPagamento.map((forma, index) => (
+                                            <option key={index} value={forma.value}>
+                                                {forma.nome}
+                                            </option>
+                                        ))}
+                                    </Form.Select>
+                                </Form.Group>
+                            </Col>
                             <Col xs={3}>
                                 <Form.Group className="mb-3" controlId="formBasicNumPassagem">
                                     <Form.Label>Insalubridade</Form.Label>
@@ -242,7 +281,7 @@ function NewFormRecibo() {
                         <p>Eu ________________________________________________, recebi de <span className="font-weight-bold">{selectedEmpresaData ? (selectedEmpresaData.nome):('SELECIONE UMA EMPRESA')}</span>
                             - CPF/CNPJ nº <span className="font-weight-bold">{selectedEmpresaData ? (selectedEmpresaData.cnpj):('XXXXXXXXXXXX-XX')}</span>,
                             a importância de <span className="font-weight-bold">{valorTotal ||
-                                'R$ 0.00'}</span>
+                                'R$ 0.00'}</span> {selectFormaPagamentos || 'Selecione uma forma de pagamento!'}
                         </p>
                         <p>
                             Este valor inclui o pagamento antecipado referente aos itens discriminados abaixo:
