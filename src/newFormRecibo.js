@@ -29,7 +29,7 @@ const currencyConfig = {
 function NewFormRecibo() {
     const [selectedEmpresa, setSelectedEmpresa] = useState('');
     const [selectedEmpresaData, setSelectedEmpresaData] = useState(null);
-    const [selectFormaPagamentos,  setSelectedFormaPagamentos] = useState(null)
+
     const [valorDiaria, setValorDiaria] = useState('');
     const [diasTrabalhados, setDiasTrabalhados] = useState('');
     const [valorTotal, setValorTotal] = useState('');
@@ -43,50 +43,32 @@ function NewFormRecibo() {
     const [maxRecibo, setMaxRecibo] = useState(1);
     const [isDisabled, setIsDisabled] = useState(false);
     let componentRef = useRef();
-
+    const [adicionalNoturno,setAdicionalNoturno] = useState(false);
     //SELECT EMPRESA
     const empresas = [
         {
             nome: 'DIER E BOSSLE COMERCIO DE ALIMENTOS LTDA',
-            cnpj: '313810630001-69'
+            cnpj: '31381063/0001-69'
         },
         {
             nome: 'CARBONI E DIER COMERCIO DE ALIMENTOS LTDA',
-            cnpj: '368497080001-69'
+            cnpj: '36849708/0001-69'
         },
         {
             nome: 'PED COMERCIO DE ALIMENTOS LTDA',
-            cnpj: '380299610001-00'
+            cnpj: '38029961/0001-00'
         },
         {
             nome:'DBCOMPLEX LTDA',
-            cnpj: '500328170001-10'
+            cnpj: '50032817/0001-10'
         },
         {
             nome: 'DBCAXIAS COMERCIO DE ALIMENTOS LTDA',
-            cnpj: '489659720001-47'
+            cnpj: '48965972/0001-47'
         }
 
     ]
 
-    const formaPagamento = [
-        {
-            'nome': 'Dinheiro',
-            'value': 'em DINHEIRO.'
-        },
-        {
-            'nome': 'PIX',
-            'value': 'por PIX.'
-        },
-        {
-            'nome': 'TED',
-            'value': 'por TED.'
-        },
-        {
-            'nome': 'Dinheiro e Transferência Bancária',
-            'value': 'uma parte em DINHEIRO e o restante por Transferência Bancária.'
-        },
-    ]
     const handleChangeEmpresa = (event) => {
         const selectedCnpj = event.target.value;
         setSelectedEmpresa(selectedCnpj);
@@ -101,10 +83,7 @@ function NewFormRecibo() {
         }
     };
 
-    const handleChangeFormaPagamento = (event) => {
-        const selectedTipo = event.target.value;
-        setSelectedFormaPagamentos(selectedTipo);
-    };
+
 
     const formatBR = (value) => {
         return new Intl.NumberFormat('pt-BR', {
@@ -176,12 +155,17 @@ function NewFormRecibo() {
     const handleChangeInsalubridade = () => {
         setInsalubridade(!insalubridade);
     };
+    const handleChangeAdicionalNoturno = () => {
+        setAdicionalNoturno(!adicionalNoturno);
+    };
+
     const handleConfirm = () => {
         const confirmed = window.confirm("Limpar recibos?");
         if (confirmed) {
             window.location.reload();
         }
     };
+
 
     return(
         <>
@@ -233,17 +217,15 @@ function NewFormRecibo() {
                             </Col>
 
                             <Col xs={3}>
-                                <Form.Group className="mb-3" controlId="formBasicFormadePagamento">
-                                    <Form.Label>Forma de Pagamento</Form.Label>
-                                    <Form.Select aria-label="Default select example" id="formBasicFormadePagamento"
-                                                 value={selectFormaPagamentos} onChange={handleChangeFormaPagamento}>
-                                        <option value="Selecione uma forma de pagamento!">Selecione um Opção</option>
-                                        {formaPagamento.map((forma, index) => (
-                                            <option key={index} value={forma.value}>
-                                                {forma.nome}
-                                            </option>
-                                        ))}
-                                    </Form.Select>
+                                <Form.Group className="mb-3" controlId="formBasicNumPassagem">
+                                    <Form.Label>Adicional Noturno de 2 horas</Form.Label>
+                                    <Form.Check // prettier-ignore
+                                        type="switch"
+                                        id="custom-switch"
+                                        label="Clique para Sim"
+                                        checked={adicionalNoturno}
+                                        onChange={handleChangeAdicionalNoturno}
+                                    />
                                 </Form.Group>
                             </Col>
                             <Col xs={3}>
@@ -281,7 +263,7 @@ function NewFormRecibo() {
                         <p>Eu ________________________________________________, recebi de <span className="font-weight-bold">{selectedEmpresaData ? (selectedEmpresaData.nome):('SELECIONE UMA EMPRESA')}</span>
                             - CPF/CNPJ nº <span className="font-weight-bold">{selectedEmpresaData ? (selectedEmpresaData.cnpj):('XXXXXXXXXXXX-XX')}</span>,
                             a importância de <span className="font-weight-bold">{valorTotal ||
-                                'R$ 0.00'}</span> {selectFormaPagamentos || 'Selecione uma forma de pagamento!'}
+                                'R$ 0.00'}</span>
                         </p>
                         <p>
                             Este valor inclui o pagamento antecipado referente aos itens discriminados abaixo:
@@ -317,6 +299,16 @@ function NewFormRecibo() {
                                 </ul>
                                 </>
                             )}
+                            {adicionalNoturno && (
+                                <>
+                                    <p className="font-weight-bold mt-3">Adicional Noturno de 2 horas.</p>
+                                    {/*<ul style={{ marginTop: '-15px'}}>*/}
+                                    {/*    <li>Valor: <span*/}
+                                    {/*        className="font-weight-bold">{valorInsalubridade || 'R$ 0,00'}</span>*/}
+                                    {/*    </li>*/}
+                                    {/*</ul>*/}
+                                </>
+                            )}
                         </Col>
                         <Col style={{ width: '100px',  backgroundColor: '#fafafa'}} className="fontPrint">
                             <p className="font-weight-bold mt-3">Férias proporcionais aos dias trabalhados:</p>
@@ -325,6 +317,9 @@ function NewFormRecibo() {
                                     className="font-weight-bold">{ferias || 'R$ 0,00'}</span>
                                 </li>
                             </ul>
+                            <p className="font-weight-bold mt-3">Forma de Pagamento:</p>
+                            <p>[&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;] Dinheiro  [&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;] Pix/Ted</p>
+
                         </Col>
                         <Col style={{ width: '150px'}} className="fontPrint">
                             <hr/>
