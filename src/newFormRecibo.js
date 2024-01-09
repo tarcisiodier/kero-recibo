@@ -1,9 +1,5 @@
 import {Col, Button, Row, Container, Card, Form} from 'react-bootstrap';
 import React, {useState, useRef, useEffect} from 'react';
-import CurrencyInput from 'react-currency-masked-input'
-import {format} from 'date-fns';
-import {ptBR} from 'date-fns/locale';
-import {utcToZonedTime} from 'date-fns-tz';
 import './FormRecibo.css';
 import IntlCurrencyInput from "react-intl-currency-input"
 import ReactToPrint from "react-to-print";
