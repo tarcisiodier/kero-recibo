@@ -212,7 +212,7 @@ function NewFormRecibo() {
                                 </Form.Group>
                             </Col>
 
-                            <Col xs={3}>
+                            {/* <Col xs={3}>
                                 <Form.Group className="mb-3" controlId="formBasicNumPassagem">
                                     <Form.Label>Adicional Noturno de 2 horas</Form.Label>
                                     <Form.Check // prettier-ignore
@@ -223,7 +223,7 @@ function NewFormRecibo() {
                                         onChange={handleChangeAdicionalNoturno}
                                     />
                                 </Form.Group>
-                            </Col>
+                            </Col> */}
                             <Col xs={3}>
                                 <Form.Group className="mb-3" controlId="formBasicNumPassagem">
                                     <Form.Label>Insalubridade</Form.Label>
@@ -265,7 +265,7 @@ function NewFormRecibo() {
                             Este valor inclui o pagamento antecipado referente aos itens discriminados abaixo:
                         </p>
                     </Row>
-                    <Row>
+                    <Row style={{fontSize: "13px"}}>
                         <Col style={{ width: '100px', backgroundColor: '#fafafa'}} className="fontPrint">
                             <p className="font-weight-bold mt-3">Transporte:</p>
                             <ul style={{ marginTop: '-15px'}}>
