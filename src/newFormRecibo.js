@@ -212,7 +212,7 @@ function NewFormRecibo() {
                                 </Form.Group>
                             </Col>
 
-                            {/* <Col xs={3}>
+                            <Col xs={3}>
                                 <Form.Group className="mb-3" controlId="formBasicNumPassagem">
                                     <Form.Label>Adicional Noturno de 2 horas</Form.Label>
                                     <Form.Check // prettier-ignore
@@ -223,7 +223,7 @@ function NewFormRecibo() {
                                         onChange={handleChangeAdicionalNoturno}
                                     />
                                 </Form.Group>
-                            </Col> */}
+                            </Col>
                             <Col xs={3}>
                                 <Form.Group className="mb-3" controlId="formBasicNumPassagem">
                                     <Form.Label>Insalubridade</Form.Label>
@@ -255,7 +255,8 @@ function NewFormRecibo() {
                 <Row media="print" style={{ marginTop: '30px', padding: '0px 20px'}} ref={(el) => (componentRef = el)}>
                     <div className="divPrint">
                     <Row>
-                        <h3>Recibo</h3>
+                        <h4 style={{marginTop: "-10px"}}>Recibo</h4>
+                        <div style={{fontSize: "14px"}}>
                         <p>Eu ________________________________________________, recebi de <span className="font-weight-bold">{selectedEmpresaData ? (selectedEmpresaData.nome):('SELECIONE UMA EMPRESA')}</span>
                             - CPF/CNPJ nº <span className="font-weight-bold">{selectedEmpresaData ? (selectedEmpresaData.cnpj):('XXXXXXXXXXXX-XX')}</span>,
                             a importância de <span className="font-weight-bold">{valorTotal ||
@@ -264,6 +265,7 @@ function NewFormRecibo() {
                         <p>
                             Este valor inclui o pagamento antecipado referente aos itens discriminados abaixo:
                         </p>
+                        </div>
                     </Row>
                     <Row style={{fontSize: "13px"}}>
                         <Col style={{ width: '100px', backgroundColor: '#fafafa'}} className="fontPrint">
@@ -277,6 +279,16 @@ function NewFormRecibo() {
                                     className="font-weight-bold">{formatBR(valorTotalPassagem) || 'R$ 0,00'}</span>
                                 </li>
                             </ul>
+                            {adicionalNoturno && (
+                                <>
+                                    <p className="font-weight-bold mt-3">Adicional Noturno de 2 horas.</p>
+                                    {/*<ul style={{ marginTop: '-15px'}}>*/}
+                                    {/*    <li>Valor: <span*/}
+                                    {/*        className="font-weight-bold">{valorInsalubridade || 'R$ 0,00'}</span>*/}
+                                    {/*    </li>*/}
+                                    {/*</ul>*/}
+                                </>
+                            )}
                         </Col>
                         <Col style={{ width: '100px',  backgroundColor: '#fafafa'}} className="fontPrint">
                             <p className="font-weight-bold mt-3">13º proporcional aos dias trabalhados:</p>
@@ -295,16 +307,7 @@ function NewFormRecibo() {
                                 </ul>
                                 </>
                             )}
-                            {adicionalNoturno && (
-                                <>
-                                    <p className="font-weight-bold mt-3">Adicional Noturno de 2 horas.</p>
-                                    {/*<ul style={{ marginTop: '-15px'}}>*/}
-                                    {/*    <li>Valor: <span*/}
-                                    {/*        className="font-weight-bold">{valorInsalubridade || 'R$ 0,00'}</span>*/}
-                                    {/*    </li>*/}
-                                    {/*</ul>*/}
-                                </>
-                            )}
+
                         </Col>
                         <Col style={{ width: '100px',  backgroundColor: '#fafafa'}} className="fontPrint">
                             <p className="font-weight-bold mt-3">Férias proporcionais aos dias trabalhados:</p>
