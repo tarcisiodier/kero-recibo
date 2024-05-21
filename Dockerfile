@@ -2,7 +2,7 @@
 FROM node:lts-alpine as build
 FROM nginx:latest as prod
 
-WORKDIR /src
+WORKDIR /
 
 COPY package*.json ./
 
