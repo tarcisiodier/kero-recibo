@@ -36,6 +36,14 @@ function FormRecibo() {
         {
             nome: 'PED COMERCIO DE ALIMENTOS LTDA',
             cnpj: '380299610001-00'
+        },
+        {
+            nome: 'HETH LTDA',
+            cnpj: '506634010001-08'
+        },
+        {
+            nome: 'IRP COMERCIO DE ALIMENTOS LTDA',
+            cnpj: '426946370001-75'
         }
     ]
 
