@@ -121,7 +121,8 @@ function NewFormRecibo() {
             const percentual = 33.33 / 100
             const valorFerias = (valorTotal * percentual).toFixed(2)
             console.log('valor ferias', valorFerias); // value without mask (ex: 1)
-            setFerias(formatBR((valorFerias / totalDias).toFixed(2) * diasTrabalhados));
+            const novoValorDasFerias = ((valorFerias / totalDias).toFixed(2) * diasTrabalhados) + ((valorTotal/ totalDias).toFixed(2) * diasTrabalhados)
+            setFerias(formatBR(novoValorDasFerias));
             const calcInsalubridade = ((1320 / DIAS_MES) * (20 / 100)) * diasTrabalhados;
             setValorInsalubridade(formatBR(calcInsalubridade));
         } else {
