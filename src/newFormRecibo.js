@@ -64,11 +64,15 @@ function NewFormRecibo() {
         },
         {
             nome: 'HETH LTDA',
-            cnpj: '506634010001-08'
+            cnpj: '50663401/0001-08'
         },
         {
             nome: 'IRP COMERCIO DE ALIMENTOS LTDA',
-            cnpj: '426946370001-75'
+            cnpj: '42694637/0001-75'
+        },
+        {
+            nome: 'DDB COMERCIO DE ALIMENTOS LTDA',
+            cnpj: '55379577/0001-48'
         }
 
     ]
