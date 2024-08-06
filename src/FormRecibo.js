@@ -44,6 +44,10 @@ function FormRecibo() {
         {
             nome: 'IRP COMERCIO DE ALIMENTOS LTDA',
             cnpj: '426946370001-75'
+        },
+        {
+            nome: 'DPB COMERCIO DE ALIMENTOS LTDA',
+            cnpj: '541032560001-53'
         }
     ]
 
