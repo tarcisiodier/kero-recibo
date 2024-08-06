@@ -73,6 +73,10 @@ function NewFormRecibo() {
         {
             nome: 'DDB COMERCIO DE ALIMENTOS LTDA',
             cnpj: '55379577/0001-48'
+        },
+        {
+            nome: 'DPB COMERCIO DE ALIMENTOS LTDA',
+            cnpj: '541032560001-53'
         }
 
     ]

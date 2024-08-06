@@ -23,34 +23,6 @@ function FormRecibo() {
 
     // Formata a data por extenso em português do Brasil
     const formattedDateLong = format(zonedDate, 'dd/MMMM/yyyy', {locale: ptBR});
-
-    const empresas = [
-        {
-            nome: 'DIER E BOSSLE COMERCIO DE ALIMENTOS LTDA',
-            cnpj: '313810630001-69'
-        },
-        {
-            nome: 'CARBONI E DIER COMERCIO DE ALIMENTOS LTDA',
-            cnpj: '368497080001-69'
-        },
-        {
-            nome: 'PED COMERCIO DE ALIMENTOS LTDA',
-            cnpj: '380299610001-00'
-        },
-        {
-            nome: 'HETH LTDA',
-            cnpj: '506634010001-08'
-        },
-        {
-            nome: 'IRP COMERCIO DE ALIMENTOS LTDA',
-            cnpj: '426946370001-75'
-        },
-        {
-            nome: 'DPB COMERCIO DE ALIMENTOS LTDA',
-            cnpj: '541032560001-53'
-        }
-    ]
-
     const handlePrint = () => {
         const printContents = divToPrint.current.innerHTML;
         const originalContents = document.body.innerHTML;
