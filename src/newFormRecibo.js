@@ -1,4 +1,4 @@
-import {Col, Button, Row, Container, Card, Form} from 'react-bootstrap';
+import {Col, Button, Row, Container, Form} from 'react-bootstrap';
 import React, {useState, useRef, useEffect} from 'react';
 import './FormRecibo.css';
 import IntlCurrencyInput from "react-intl-currency-input"
